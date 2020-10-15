@@ -52,3 +52,4 @@ production:
   database: furima_30482_production
   username: furima_30482
   password: <%= ENV['FURIMA_30482_DATABASE_PASSWORD'] %>
+  gem: 'pry-rails'
