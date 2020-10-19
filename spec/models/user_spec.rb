@@ -87,27 +87,51 @@ describe User do
     end
 
     it 'first_nameが全角入力でなければ登録できないこと' do
-      @user.first_name = ''
+      @user.first_name = 'aaa'
       @user.valid?
-      expect(@user.errors.full_messages).to include("First name can't be blank", 'First name is invalid')
+      expect(@user.errors.full_messages).to include("First name is invalid")
     end
 
     it 'last_nameが全角入力でなければ登録できないこと' do
-      @user.last_name = ''
+      @user.last_name = 'aaa'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last name can't be blank", 'Last name is invalid')
+      expect(@user.errors.full_messages).to include("Last name is invalid")
     end
 
     it 'first_name_kanaが全角カタカナでなければ登録できないこと' do
-      @user.first_name_kana = ''
+      @user.first_name_kana = 'aaa'
       @user.valid?
-      expect(@user.errors.full_messages).to include("First name kana can't be blank", 'First name kana is invalid')
+      expect(@user.errors.full_messages).to include("First name kana is invalid")
     end
 
     it 'last_name_kanaが全角カタカナでなければ登録できないこと' do
-      @user.last_name_kana = ''
+      @user.last_name_kana = 'aaa'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last name kana can't be blank", 'Last name kana is invalid')
+      expect(@user.errors.full_messages).to include("Last name kana is invalid")
+    end
+
+    it 'emailに@が含まれていないとユーザー登録できない'do
+      @user.email = 'aaa'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid", "Email is invalid")
+    end
+
+    it 'passwordが半角数字のみだとユーザー登録できない' do
+      @user.password = 'aaa'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password",
+                                                    "Password confirmation doesn't match Password",
+                                                    "Password is too short (minimum is 6 characters)",
+                                                    "Password is too short (minimum is 6 characters)")
+    end
+
+    it 'passwordが半角英字のみだとユーザー登録できない' do
+      @user.password = '111'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password",
+                                                    "Password confirmation doesn't match Password",
+                                                    "Password is too short (minimum is 6 characters)",
+                                                    "Password is too short (minimum is 6 characters)")
     end
   end
 end
