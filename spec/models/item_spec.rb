@@ -5,18 +5,18 @@ describe Item do
     @item = FactoryBot.build(:item)
   end
 
-  describe '#create' do
+  describe '商品出品機能' do
     context '全ての入力条件を満たしたら送信できる' do
       it 'nicknameとemail、passwordとcategory_idとstatus_idとdelivery_days_idとdelivery_fee_idとdelivery_area_idとpriceが存在すれば出品できる' do
       expect(@item).to be_valid
       end
     end
   
-    #it 'image(画像)がない場合は登録できないこと' do
-     # @item.image = ''
-     # @item.valid?
-      #expect(@item.errors.full_messages).to include()
-    #end
+    it 'image(画像)がない場合は登録できないこと' do
+     @item.image = nil
+     @item.valid?
+     expect(@item.errors.full_messages).to include("Image can't be blank")
+    end
     
     it 'name(名前)がない場合は登録できないこと' do
       @item.name = ''
@@ -66,17 +66,23 @@ describe Item do
       expect(@item.errors.full_messages).to include("Price can't be blank")
     end
 
-    it 'price(値段)が300~9999999であれば登録できないこと' do
-      @item.price ='500'
+    it 'price(値段)が300以上でないと登録できないこと' do
+      @item.price ='200'
       @item.valid?
-      expect(@item.errors.full_messages).to include()
+      expect(@item.errors.full_messages).to include("Price must be greater than 300")
     end
 
-    #it '販売価格は半角数字出ないと保存できない'
-      #@item.price ='500'
-      #@item.valid?
-      #expect(@item.errors.full_messages).to include()
-    #end
+    it 'price(値段)が9999999以下でないと登録できないこと' do
+      @item.price ='19999999999999'
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price must be less than 9999999")
+    end
+
+    it '販売価格は半角数字出ないと保存できない' do
+      @item.price ='aaa'
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price is not a number")
+    end
   end
 end
   
