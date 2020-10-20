@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :email,             format: { with: /@/ }
   validates :password,          length: { minimum: 6 }, confirmation: true, format: { with: /\A[a-zA-Z0-9]+\z/ }
-  NAME_REGEX = /\A[ぁ-んァ-ン一-龥]+\z/
-  NAME_KANA = /\A[ァ-ヶー－]+\z/
+  NAME_REGEX = /\A[ぁ-んァ-ン一-龥]+\z/.freeze
+  NAME_KANA = /\A[ァ-ヶー－]+\z/.freeze
   with_options presence: true do
     validates :nickname
     validates :first_name,       format: { with: NAME_REGEX }
@@ -15,7 +15,7 @@ class User < ApplicationRecord
     validates :last_name_kana,   format: { with: NAME_KANA }
     validates :birthday
 
-    #has_many :items
-    #has_many :purchases
+    # has_many :items
+    # has_many :purchases
   end
 end
