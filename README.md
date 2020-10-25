@@ -45,7 +45,7 @@
 | Column            | Type      | ------------------------------ |
 | ----------------- | --------- | ------------------------------ |
 | post_code         | string    | null: false                    |
-| prefectures_id    | integer   | null: false                    |
+| prefecture_id     | integer   | null: false                    |
 | city              | string    | null: false                    |
 | address           | string    | null: false                    |
 | appointment_name  | string    |                                |
@@ -69,3 +69,5 @@
 - belongs_to :user
 - belongs_to :item
 - has_one    :street_address
+
+
